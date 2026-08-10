@@ -93,6 +93,7 @@ int main(){
             cout<<"Participant details has been successfully Updated"<<endl;
             break;
         case 2:
+            cin.ignore();
             cout<<"\nEnter the prompt category(story generation, coding, image ideas, problem-solving, summarization and creative writing.):";
             getline(cin,prompts[participantCount].promptCategory);
             cout<<"\nEnter the prompt ID:";
