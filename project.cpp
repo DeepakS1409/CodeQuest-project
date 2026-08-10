@@ -81,6 +81,7 @@ int main(){
         switch(choice){
 
         case 1:
+        if(participantCount<maxparticipant-1){
             participantCount++;
             cout<<"Enter the participant ID:";
             cin>>part[participantCount].participantID;
@@ -93,7 +94,13 @@ int main(){
             getline(cin,part[participantCount].teamname);
             cout<<"Participant details has been successfully Updated"<<endl;
             break;
+        }
+        else{
+            cout<<"You can't able to add more participant."<<endl<<endl;
+            break;
+        }
         case 2:
+            if(promptCount<maxprompt){
             int id;
             cout<<"Enter the Participant ID:";
             cin.ignore();
@@ -110,7 +117,12 @@ int main(){
             cout<<"\nPrompt details added successfully!"<<endl;
             promptCount++;
             break;
+            }else{
+                cout<<"You can't able to add more details"<<endl<<endl;
+                break;
+            }
         case 3:
+            if(scoreCount<maxparticipant){
             cout<<"\nEnter the score for the prompt:";
             cout<<"\nEnter the creative score:";
             cin>>scores[scoreCount].creativeScore;
@@ -123,9 +135,13 @@ int main(){
             cout<<"\nEnter the audience score:";
             cin>>scores[scoreCount].audienceScore;
             cout<<"\nPrompt scores added successfully!";
-            cout<<"\nFinal score is being calculated...";
+            cout<<"\nFinal score is being calculated..."<<endl;
             scoreCount++;
             break;
+            }else{
+                cout<<"You can't able to add more details."<<endl<<endl;
+                break;
+            }
         case 4:
          //   d.displayPrompts(Participant, participantCount);
             break;
@@ -136,7 +152,7 @@ int main(){
             cout<<"Invalid choice. Please try again."<<endl;
 
     }
-    }while(choice!=5 && participantCount<maxparticipant-1);
+    }while(choice!=5);
 }else{
     cout<<"Invalid Username or password";
 }
