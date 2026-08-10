@@ -59,7 +59,7 @@ int main(){
     cin>>password;
     Security s;
     if(s.getaccess(username,password)){
-    int maxparticipant,choice,participantCount=0;
+    int maxparticipant,choice,participantCount=-1,promptCount=0,scoreCount=0;
     cout<<"Enter the maximum participant of this event:";
     cin>>maxparticipant;
     int maxprompt=maxparticipant;
@@ -81,6 +81,7 @@ int main(){
         switch(choice){
 
         case 1:
+            participantCount++;
             cout<<"Enter the participant ID:";
             cin>>part[participantCount].participantID;
             cin.ignore();
@@ -93,32 +94,37 @@ int main(){
             cout<<"Participant details has been successfully Updated"<<endl;
             break;
         case 2:
+            int id;
+            cout<<"Enter the Participant ID:";
             cin.ignore();
+            getline(cin,prompts[promptCount].promptCategory);
             cout<<"\nEnter the prompt category(story generation, coding, image ideas, problem-solving, summarization and creative writing.):";
-            getline(cin,prompts[participantCount].promptCategory);
+            getline(cin,prompts[promptCount].promptCategory);
             cout<<"\nEnter the prompt ID:";
-            cin>>prompts[participantCount].promptID;
+            cin>>prompts[promptCount].promptID;
             cout<<"\nType your prompt here:";
             cin.ignore();
-            getline(cin,prompts[participantCount].promptText);
+            getline(cin,prompts[promptCount].promptText);
             cout<<"\nEnter the challenge name:";
-            getline(cin,prompts[participantCount].challengeName);
+            getline(cin,prompts[promptCount].challengeName);
             cout<<"\nPrompt details added successfully!"<<endl;
+            promptCount++;
             break;
         case 3:
             cout<<"\nEnter the score for the prompt:";
             cout<<"\nEnter the creative score:";
-            cin>>scores[participantCount].creativeScore;
+            cin>>scores[scoreCount].creativeScore;
             cout<<"\nEnter the relevance score:";
-            cin>>scores[participantCount].revelanceScore;
+            cin>>scores[scoreCount].revelanceScore;
             cout<<"\nEnter the clarity score:";
-            cin>>scores[participantCount].clarityScore;
+            cin>>scores[scoreCount].clarityScore;
             cout<<"\nEnter the output score:";
-            cin>>scores[participantCount].outputScore;
+            cin>>scores[scoreCount].outputScore;
             cout<<"\nEnter the audience score:";
-            cin>>scores[participantCount].audienceScore;
+            cin>>scores[scoreCount].audienceScore;
             cout<<"\nPrompt scores added successfully!";
             cout<<"\nFinal score is being calculated...";
+            scoreCount++;
             break;
         case 4:
          //   d.displayPrompts(Participant, participantCount);
@@ -130,7 +136,7 @@ int main(){
             cout<<"Invalid choice. Please try again."<<endl;
 
     }
-    }while(choice!=5 && participantCount<maxparticipant);
+    }while(choice!=5 && participantCount<maxparticipant-1);
 }else{
     cout<<"Invalid Username or password";
 }
