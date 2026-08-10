@@ -1,0 +1,40 @@
+AI Prompt Battle & Leaderboard System
+A technology club wants to organize an AI Prompt Battle where students
+compete by creating effective prompts for different tasks such as story
+
+generation, coding, image ideas, problem-solving, summarization, and
+creative writing. The system should maintain details such as Participant ID,
+Participant Name, Department, Team Name, Prompt Category, and
+Number of Rounds Participated. Each participant can submit prompts for
+different challenges, and the system should maintain details such as Prompt
+ID, Challenge Name, Prompt Text, Participant ID, Creativity Score,
+Relevance Score, Clarity Score, and Output Quality Score.
+For each prompt, judges can provide ratings from 0 to 10 for Creativity,
+Relevance, Clarity, and Output Quality. The system should calculate the
+Prompt Score = (Creativity + Relevance + Clarity + Output Quality) / 4.
+Participants can also receive an Audience Score based on votes, and the Final
+Score = (Prompt Score × 0.8) + (Audience Score × 0.2). Based on the
+Final Score, prompts may be classified as Master Prompt (8–10), Strong
+Prompt (6–<8), Average Prompt (4–<6), or Needs Improvement (below
+4).
+The system should maintain an AI Prompt Battle Leaderboard based on
+participants' overall scores across multiple rounds. It should identify the Best
+Prompt, Most Creative Prompt, Audience Favorite, Best Problem-Solving
+Prompt, and Prompt Battle Champion. The application should provide a
+simple menu-driven C++ console interface to register participants, create
+challenges, submit prompts, record judge scores, record audience votes,
+calculate prompt scores, search participants or prompts, compare
+participants, display the leaderboard, identify winners, and generate a
+final Prompt Battle Report. Input validation should be performed for
+duplicate Participant/Prompt IDs, ratings outside 0–10, negative votes,
+invalid categories, duplicate submissions, and invalid menu choices.
+Students should demonstrate the use of operators, control statements,
+loops, arrays, functions, classes and objects, and basic inheritance.
+Students may create a base Participant or Prompt class and optional derived
+classes such as CodingPrompt, CreativePrompt, StoryPrompt, or
+ProblemSolvingPrompt to demonstrate inheritance and category-specific
+behavior. Students are not expected to develop an AI model, connect to
+ChatGPT or other AI APIs, build an AI-based evaluation system, or
+develop a professional AI platform. The primary objective is to demonstrate
+C++ Bridge Course learning, logical thinking, problem-solving ability,
+code development, and understanding of their own implementation.
