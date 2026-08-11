@@ -24,11 +24,12 @@ class getDetails : public Participant, public prompt, public score
 {
 public:
     int score;
+    string partiId;
 
     void getParticipant(){
         cout<<"Enter the participant ID:";
         cin>>participantID;
-
+        partiId=participantID;
         cin.ignore();
 
         cout<<"\nEnter the participant name:";
@@ -177,11 +178,13 @@ if(s.getaccess(username,password)){
     cin>>maxparticipant;
     maxprompt=maxparticipant;
 
+    string id[maxparticipant];
+    string prom[maxprompt];
+
     Participant* part=new Participant[maxparticipant];
     prompt* prompts=new prompt[maxprompt];
     score* scores=new score[maxprompt];
     getDetails* details=new getDetails[maxparticipant];
-    //displayDetails* display=new displayDetails[maxparticipant];
 
     do{
         cout<<"==============Menu================="<<endl;
@@ -198,6 +201,7 @@ if(s.getaccess(username,password)){
         case 1:
         if(participantCount<maxparticipant){
             details[participantCount].getParticipant();
+            id[participantCount]=details[participantCount].partiId;
             participantCount++;
             break;
         }
