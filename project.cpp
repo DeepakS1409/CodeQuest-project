@@ -1,35 +1,86 @@
 #include <iostream>
 #include <string>
-using namespace std; 
+using namespace std;
 
 class Participant{
     protected:
         string participantID,participantname,department,teamname;
+        int roundsParticipated;
 
 };
 
 class prompt{
     protected:
-        int promptID,participantId;
+        string promptID,participantId;
         string challengeName,promptText,promptCategory;
 };
 
 class score{
     protected:
-        float creativeScore,revelanceScore,clarityScore,outputScore,audienceScore,promptScore,finalScore;
+        float creativeScore,relevanceScore,clarityScore,outputScore,audienceScore,promptScore,finalScore;
 
     };
+
+class Challenge
+{
+protected:
+    int challengeID;
+    string challengeName;
+    string challengeCategory;
+
+public:
+
+    void createChallenge()
+    {
+        cout << "\nEnter Challenge ID: ";
+        cin >> challengeID;
+
+        cin.ignore();
+
+        cout << "Enter Challenge Name: ";
+        getline(cin, challengeName);
+
+        cout << "Enter Challenge Category: ";
+        getline(cin, challengeCategory);
+
+        cout << "\nChallenge created successfully!\n";
+    }
+
+    void displayChallenge()
+    {
+        cout << "\n---------- Challenge Details ----------\n";
+        cout << "Challenge ID       : " << challengeID << endl;
+        cout << "Challenge Name     : " << challengeName << endl;
+        cout << "Challenge Category : " << challengeCategory << endl;
+    }
+};
 
 class getDetails : public Participant, public prompt, public score
 {
 public:
     float calculatedFinalScore;
-    string partiId;
+    string partiId,promId;
 
-    void getParticipant(){
-        cout<<"Enter the participant ID:";
-        cin>>participantID;
-        partiId=participantID;
+    bool checkDuplicate(string id[],int n,string newId){
+        for(int i=0;i<n;i++){
+            if(id[i]==newId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void getParticipant(string id[],int n){
+        string newId;
+        do{
+            cout<<"Enter the participant ID:";
+            cin>>newId;
+            if(checkDuplicate(id,n,newId)){
+                cout<<"Participant ID already Exist!... Enter another ID"<<endl;
+            }
+        }while(checkDuplicate(id,n,newId));
+        participantID=newId;
+        partiId=newId;
         cin.ignore();
 
         cout<<"\nEnter the participant name:";
@@ -41,26 +92,57 @@ public:
         cout<<"\nEnter the team name:";
         getline(cin,teamname);
 
-        cout << "\nEnter the number of rounds participated:";
-        cin>>roundsParticipated;
+        do
+        {
+            cout << "Enter the number of rounds participated: ";
+            cin >> roundsParticipated;
+            if(roundsParticipated < 0)
+            {
+                cout << "Rounds cannot be negative.\n";
+            }
+        }while(roundsParticipated < 0);
 
         cout<<"Participant details has been successfully Updated"<<endl;
     }
 
+    void searchParticipant(string id[], int n, getDetails details[])
+    {
+        string searchID;
+        cout << "\nEnter Participant ID to search: ";
+        cin >> searchID;
+        for(int i = 0; i < n; i++)
+        {
+            if(id[i] == searchID)
+            {
+                details[i].displayParticipant();
+                return;
+            }
+        }
+        cout << "Participant not found!\n";
+    }
 
-    void getPrompt(){
-        cout<<"Enter the Participant ID:";
-        cin>>participantId;
+    void getPrompt(string id[],int n){
+        string newPromptID;
+        do
+        {
+            cout << "Enter Prompt ID: ";
+            cin >> newPromptID;
+            if(checkDuplicate(id,n,newPromptID))
+            {
+                cout << "Prompt ID already exists! Enter another ID.\n";
+            }
+        }while(checkDuplicate(id,n, newPromptID));
+        promptID=newPromptID;
+        promId=newPromptID;
 
+        cout << "\nEnter Participant ID: ";
+        cin >> participantId;
+        
         cout<<"\nEnter the prompt category:";
         cin.ignore();
         getline(cin,promptCategory);
 
-        cout<<"\nEnter the prompt ID:";
-        cin>>promptID;
-
         cout<<"\nType your prompt here:";
-        cin.ignore();
         getline(cin,promptText);
 
         cout<<"\nEnter the challenge name:";
@@ -69,6 +151,21 @@ public:
         cout<<"\nPrompt details added successfully!"<<endl;
     }
 
+    void searchPrompt(string id[], int n, getDetails details[])
+    {
+        string searchID;
+        cout << "\nEnter Prompt ID to search: ";
+        cin >> searchID;
+        for(int i = 0; i < n; i++)
+        {
+            if(id[i] == searchID)
+            {
+                details[i].displayPrompt();
+                return;
+            }
+        }
+        cout << "Prompt not found!\n";
+    }
 
     void getScore()
     {
@@ -97,7 +194,7 @@ public:
             cout << "\nEnter the clarity score (0-10): ";
             cin >> clarityScore;
             if(clarityScore < 0 || clarityScore > 10)
-            {    
+            {
                 cout << "Invalid score! Enter between 0 and 10.\n";
             }
         }while(clarityScore < 0 || clarityScore > 10);
@@ -123,6 +220,7 @@ public:
         }while(audienceScore < 0 || audienceScore > 10);
         cout << "\nPrompt scores added successfully!\n";
     }
+
     void scoreCalculation()
     {
         promptScore = (creativeScore + relevanceScore + clarityScore + outputScore) / 4.0;
@@ -131,15 +229,18 @@ public:
         cout << "Prompt Score: " << promptScore << endl;
         cout << "Final Score: " << finalScore << endl;
     }
+
     void displayParticipant(){
         cout<<"Participant ID: "<<participantID<<endl;
         cout<<"Participant Name: "<<participantname<<endl;
         cout<<"Department: "<<department<<endl;
         cout<<"Team Name: "<<teamname<<endl;
+        cout << "Rounds Participated: " << roundsParticipated << endl;
     }
 
 
     void displayPrompt(){
+        cout <<"Participant ID: " << participantId << endl;
         cout<<"Prompt ID: "<<promptID<<endl;
         cout<<"Prompt Category: "<<promptCategory<<endl;
         cout<<"Prompt Text: "<<promptText<<endl;
@@ -149,7 +250,7 @@ public:
 
     void displayScore(){
         cout<<"Creative Score: "<<creativeScore<<endl;
-        cout<<"Relevance Score: "<<revelanceScore<<endl;
+        cout<<"Relevance Score: "<<relevanceScore<<endl;
         cout<<"Output Score: "<<outputScore<<endl;
         cout<<"Clarity Score: "<<clarityScore<<endl;
         cout<<"Audience Score: "<<audienceScore<<endl;
@@ -175,7 +276,172 @@ public:
             return "Needs Improvement 🫥 Back to the Drawing Board 📝";
         }
     }
-};
+
+    float getFinalScore()
+    {
+        return calculatedFinalScore;
+    }
+
+    float getCreativeScore()
+    {
+        return creativeScore;
+    }
+
+    float getAudienceScore()
+    {
+        return audienceScore;
+    }
+
+    string getCategory()
+    {
+        return promptCategory;
+    }};
+
+void compareParticipants(string id[], int n, getDetails details[])
+{
+    string id1, id2;
+    int pos1 = -1, pos2 = -1;
+    cout << "\nEnter first Participant ID: ";
+    cin >> id1;
+    cout << "Enter second Participant ID: ";
+    cin >> id2;
+    for(int i = 0; i < n; i++)
+    {
+        if(id[i] == id1)
+            pos1 = i;
+        if(id[i] == id2)
+            pos2 = i;
+    }
+    if(pos1 == -1 || pos2 == -1)
+    {
+        cout << "One or both participants not found!\n";
+        return;
+    }
+
+    cout << "\n========== COMPARISON ==========\n";
+    cout << id1 << " Score: "<< details[pos1].calculatedFinalScore << endl;
+    cout << id2 << " Score: "<< details[pos2].calculatedFinalScore << endl;
+    if(details[pos1].calculatedFinalScore>details[pos2].calculatedFinalScore)
+    {
+        cout << "Winner: " << id1 << endl;
+    }else if(details[pos2].calculatedFinalScore > details[pos1].calculatedFinalScore)
+    {
+        cout << "Winner: " << id2 << endl;
+    }else
+    {
+        cout << "Both participants have the same score!\n";
+    }
+}
+
+void displayLeaderboard(string id[], int n, getDetails details[])
+{
+    string tempID[n];
+    float tempScore[n];
+    for(int i = 0; i < n; i++)
+    {
+        tempID[i] = id[i];
+        tempScore[i] = details[i].calculatedFinalScore;
+    }
+    for(int i = 0; i < n - 1; i++)
+    {
+        for(int j = 0; j < n - i - 1; j++)
+        {
+            if(tempScore[j] < tempScore[j + 1])
+            {
+                float temp = tempScore[j];
+                tempScore[j] = tempScore[j + 1];
+                tempScore[j + 1] = temp;
+
+                string tempIDValue = tempID[j];
+                tempID[j] = tempID[j + 1];
+                tempID[j + 1] = tempIDValue;
+            }
+        }
+    }
+    cout << "\n========== LEADERBOARD ==========\n";
+    cout << "Rank\tParticipant ID\tFinal Score\n";
+    for(int i = 0; i < n; i++)
+    {
+        cout << i + 1 << "\t"<< tempID[i] << "\t\t"<< tempScore[i] << endl;
+    }
+}
+
+void displayWinners(string id[], int n, getDetails details[])
+{
+    if(n == 0)
+    {
+        cout << "No participants available.\n";
+        return;
+    }
+    int bestPrompt = 0;
+    int mostCreative = 0;
+    int audienceFavorite = 0;
+    int bestProblem = -1;
+    int champion = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(details[i].getFinalScore() >details[bestPrompt].getFinalScore())
+        {
+            bestPrompt = i;
+        }
+        if(details[i].getCreativeScore()>details[mostCreative].getCreativeScore())
+        {
+            mostCreative = i;
+        }
+        if(details[i].getAudienceScore()>details[audienceFavorite].getAudienceScore())
+        {
+            audienceFavorite = i;
+        }
+        if(details[i].getFinalScore() >details[champion].getFinalScore())
+        {
+            champion = i;
+        }
+        if(details[i].getCategory() == "Problem Solving")
+        {
+            if(bestProblem == -1 ||details[i].getFinalScore() >details[bestProblem].getFinalScore())
+            {
+                bestProblem = i;
+            }
+        }
+    }
+    cout << "\n========== WINNERS ==========\n";
+    cout << "\nBest Prompt: "<< id[bestPrompt] << endl;
+    cout << "Most Creative Prompt: "<< id[mostCreative] << endl;
+    cout << "Audience Favorite: "<< id[audienceFavorite] << endl;
+    if(bestProblem != -1)
+    {
+        cout << "Best Problem-Solving Prompt: "<< id[bestProblem] << endl;
+    }
+    else
+    {
+        cout << "Best Problem-Solving Prompt: No entry\n";
+    }
+
+    cout << "Prompt Battle Champion: "<< id[champion] << endl;
+}
+
+void finalReport(string id[], int n, getDetails details[])
+{
+    cout << "\n========================================\n";
+    cout << "       FINAL PROMPT BATTLE REPORT          ";
+    if(n == 0)
+    {
+        cout << "No participants registered.\n";
+        return;
+    }
+    for(int i = 0; i < n; i++)
+    {
+        cout << "\n---------- Participant " << i + 1 << " ----------\n";
+        details[i].displayParticipant();
+        cout << "\nPrompt Details:\n";
+        details[i].displayPrompt();
+        cout << "\nScore Details:\n";
+        details[i].displayScore();
+        cout << "Classification: "<< details[i].promptAnalyze() << endl;
+    }
+    cout << "          END OF FINAL REPORT             ";
+    cout << "\n========================================\n";
+}
 
 class Security
 {
@@ -205,26 +471,44 @@ int main(){
     cin>>username;
     cout<<"Enter the password 🔑:";
     cin>>password;
+
 if(s.getaccess(username,password)){
-    cout<<"Enter the maximum participant of this event:";
-    cin>>maxparticipant;
-    maxprompt=maxparticipant;
+    cout << "Enter maximum number of participants: ";
+    cin >> maxparticipant;
+
+    cout << "Enter maximum number of prompts: ";
+    cin >> maxprompt;
+
+    int maxChallenge;
+    cout << "Enter maximum number of challenges: ";
+    cin >> maxChallenge;
+
+    int challengeCount = 0;
 
     string id[maxparticipant];
     string prom[maxprompt];
-
     Participant* part=new Participant[maxparticipant];
     prompt* prompts=new prompt[maxprompt];
     score* scores=new score[maxprompt];
     getDetails* details=new getDetails[maxparticipant];
+    Challenge* challenges = new Challenge[maxChallenge];
 
     do{
         cout<<"==============Menu================="<<endl;
-        cout<<"1.Register Participant\n";
-        cout<<"2.Prompt Details\n";
-        cout<<"3.Enter the scores\n";
-        cout<<"4.Display all prompts\n";
-        cout<<"5.Exit\n";
+        cout << "1. Register Participant\n";
+        cout << "2. Create Challenge\n";
+        cout << "3. Prompt Details\n";
+        cout << "4. Enter the scores\n";
+        cout << "5. Display all prompts\n";
+        cout << "6. Display all challenges\n";
+        cout << "7. Search Participant\n";
+        cout << "8. Search Prompt\n"; 
+        cout << "9. Compare Participants\n";
+        cout << "10. Display Leaderboard\n";
+        cout << "11. Display Winners\n";
+        cout << "12. Final Prompt Battle Report\n";
+        cout << "13. Exit\n";
+
         cout<<"===================================\n";
         cout<<"Enter your choice:";
         cin>>choice;
@@ -234,6 +518,7 @@ if(s.getaccess(username,password)){
             if(participantCount < maxparticipant)
             {
                 details[participantCount].getParticipant(id, participantCount);
+                //id[participantCount] = details[participantCount].partiId;
                 id[participantCount] = details[participantCount].partiId;
                 participantCount++;
             }else{
@@ -241,16 +526,27 @@ if(s.getaccess(username,password)){
             }
             break;
         case 2:
+            if(challengeCount < maxChallenge)
+            {
+                challenges[challengeCount].createChallenge();
+                challengeCount++;
+            }else
+            {
+                cout << "You cannot add more challenges.\n";
+            }
+            break;
+        case 3:
             if(promptCount<maxprompt){
-                details[promptCount].getPrompt();
+                details[promptCount].getPrompt(prom,promptCount);
+                prom[promptCount]=details[promptCount].promId;
                 promptCount++;
                 break;
             }else{
                 cout<<"You can't able to add more details"<<endl<<endl;
                 break;
             }
-        case 3:
-            if(scoreCount<maxparticipant){
+        case 4:
+            if(scoreCount < maxprompt){
                 details[scoreCount].getScore();
                 scoreCount++;
                 break;
@@ -258,29 +554,78 @@ if(s.getaccess(username,password)){
                 cout<<"You can't able to add more details."<<endl<<endl;
                 break;
             }
-        case 4:
-            cout<<"===========Details==========="<<endl;
-            for(int i=0;i<maxparticipant;i++){
-                if(participantCount!=0){
-                    details[i].displayParticipant();
-                }
-                if(promptCount!=0){
+        case 5:
+            cout << "=========== Details ===========\n";
+            for(int i = 0; i < participantCount; i++)
+            {
+                details[i].displayParticipant();
+                if(i < promptCount)
+                {
                     details[i].displayPrompt();
                 }
-                if(scoreCount!=0){
+                if(i < scoreCount)
+                {
                     details[i].displayScore();
-                    cout<<details[i].promptAnalyze()<<endl;
+                    cout << details[i].promptAnalyze() << endl;
                 }
             }
             break;
-        case 5:
+        case 6:
+            cout << "\n========== ALL CHALLENGES ==========\n";
+            if(challengeCount == 0)
+            {
+                cout << "No challenges created yet.\n";
+            }else
+            {
+                for(int i = 0; i < challengeCount; i++)
+                {
+                    challenges[i].displayChallenge();
+                }
+            }
+            break;
+        case 7:
+            if(participantCount == 0)
+            {
+                cout << "No participants registered.\n";
+            }else
+            {
+                details[0].searchParticipant(id, participantCount, details);
+            }
+            break;
+        case 8:
+            if(promptCount == 0)
+            {
+                cout << "No prompts added.\n";
+            }else
+            {
+                details[0].searchPrompt(prom, promptCount, details);
+            }
+    break;
+        case 9:
+            compareParticipants(id, participantCount, details);
+            break;
+        case 10:
+            displayLeaderboard(id, participantCount, details);
+            break;
+        case 11:
+            displayWinners(id, participantCount, details);
+            break;
+        case 12:
+            finalReport(id, participantCount, details);
+            break;
+        case 13:
             cout<<"Exiting the program."<<endl;
             break;
         default:
             cout<<"Invalid choice. Please try again."<<endl;
 
     }
-    }while(choice!=5);
+    }while(choice!=13);
+    delete[] part;
+    delete[] prompts;
+    delete[] scores;
+    delete[] details;
+    delete[] challenges;
 }else{
     cout<<"Invalid Username or password";
 }
