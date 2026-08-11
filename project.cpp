@@ -3,113 +3,145 @@
 using namespace std;
 
 class Participant{
-    public:
+    protected:
         string participantID,participantname,department,teamname;
 
-        void displayParticipant(){
-            cout<<"Participant ID: "<<participantID<<endl;
-            cout<<"Participant Name: "<<participantname<<endl;
-            cout<<"Department: "<<department<<endl;
-            cout<<"Team Name: "<<teamname<<endl;
-        }
 };
 
 class prompt{
-    public:
+    protected:
         int promptID,participantId;
-        string challengeName,promptText,promptCategory;// wait for 1 min OK BHAI
-
-        void displayPrompt(){
-            cout<<"Prompt ID: "<<promptID<<endl;
-            cout<<"Prompt Category: "<<promptCategory<<endl;
-            cout<<"Prompt Text: "<<promptText<<endl;
-            cout<<"Challenge Name: "<<challengeName<<endl;
-        }
+        string challengeName,promptText,promptCategory;
 };
 
 class score{
-    public:
+    protected:
         float creativeScore,revelanceScore,clarityScore,outputScore,audienceScore,promptScore,finalScore;
 
-        void scoreCalculation(){
-            float promptScore=(creativeScore+revelanceScore+clarityScore+outputScore)/4.0;
-            float finalScore=(promptScore*0.8)+(audienceScore*0.2);
-        }
-
-        void displayScore(){
-            cout<<"Creative Score:"<<creativeScore<<endl;
-            cout<<"Relevance Score:"<<revelanceScore<<endl;
-            cout<<"Output Score:"<<outputScore<<endl;
-            cout<<"Clarity Score:"<<clarityScore<<endl;
-            cout<<"Audience Score:"<<audienceScore<<endl;
-            cout<<"Prompt Score:"<<promptScore<<endl;
-            cout<<"Final Score:"<<finalScore<<endl;
-        }
-
-        string promptAnalyze()
-        {
-            if(finalScore >= 8){
-                return "Master Prompt";
-            }else if(finalScore >= 6){
-                return "Strong Prompt";
-            }else if(finalScore >= 4){
-                return "Average Prompt";
-            }else{
-                return "Needs Improvement";
-            }
-
-        }
     };
 
-class getDetails:public Participant,public prompt,public score
+class getDetails : public Participant, public prompt, public score
 {
-    public:
+public:
+    int score;
+
     void getParticipant(){
-            cout<<"Enter the participant ID:";
-            cin>>participantID;
-            cin.ignore();
-            cout<<"\nEnter the participant name:";
-            getline(cin,participantname);
-            cout<<"\nEnter the department:";
-            getline(cin,department);
-            cout<<"\nEnter the team name:";
-            getline(cin,teamname);
-            cout<<"Participant details has been successfully Updated"<<endl;
-        }
+        cout<<"Enter the participant ID:";
+        cin>>participantID;
 
-        void getPrompt(){
-            cout<<"Enter the Participant ID:";
-            cin.ignore();
-            cin>>participantID;
-            cout<<"\nEnter the prompt category(story generation, coding, image ideas, problem-solving, summarization and creative writing.):";
-            cin.ignore();
-            getline(cin,promptCategory);
-            cout<<"\nEnter the prompt ID:";
-            cin>>promptID;
-            cout<<"\nType your prompt here:";
-            cin.ignore();
-            getline(cin,promptText);
-            cout<<"\nEnter the challenge name:";
-            getline(cin,challengeName);
-            cout<<"\nPrompt details added successfully!"<<endl;
-        }
+        cin.ignore();
 
-        void getScore(){
-            cout<<"\nEnter the score for the prompt";
-            cout<<"\nEnter the creative score:";
-            cin>>creativeScore;
-            cout<<"\nEnter the relevance score:";
-            cin>>revelanceScore;
-            cout<<"\nEnter the clarity score:";
-            cin>>clarityScore;
-            cout<<"\nEnter the output score:";
-            cin>>outputScore;
-            cout<<"\nEnter the audience score:";
-            cin>>audienceScore;
-            cout<<"\nPrompt scores added successfully!";
-            cout<<"\nFinal score is being calculated..."<<endl;
+        cout<<"\nEnter the participant name:";
+        getline(cin,participantname);
+
+        cout<<"\nEnter the department:";
+        getline(cin,department);
+
+        cout<<"\nEnter the team name:";
+        getline(cin,teamname);
+
+        cout<<"Participant details has been successfully Updated"<<endl;
+    }
+
+
+    void getPrompt(){
+        cout<<"Enter the Participant ID:";
+        cin>>participantId;
+
+        cout<<"\nEnter the prompt category:";
+        cin.ignore();
+        getline(cin,promptCategory);
+
+        cout<<"\nEnter the prompt ID:";
+        cin>>promptID;
+
+        cout<<"\nType your prompt here:";
+        cin.ignore();
+        getline(cin,promptText);
+
+        cout<<"\nEnter the challenge name:";
+        getline(cin,challengeName);
+
+        cout<<"\nPrompt details added successfully!"<<endl;
+    }
+
+
+    void getScore(){
+        cout<<"\nEnter the score for the prompt";
+
+        cout<<"\nEnter the creative score:";
+        cin>>creativeScore;
+
+        cout<<"\nEnter the relevance score:";
+        cin>>revelanceScore;
+
+        cout<<"\nEnter the clarity score:";
+        cin>>clarityScore;
+
+        cout<<"\nEnter the output score:";
+        cin>>outputScore;
+
+        cout<<"\nEnter the audience score:";
+        cin>>audienceScore;
+
+        cout<<"\nPrompt scores added successfully!";
+        cout<<"\nFinal score is being calculated..."<<endl;
+    }
+    void scoreCalculation()
+    {
+        float promptScore=(creativeScore+revelanceScore+clarityScore+outputScore)/4.0;
+        float finalScore=(promptScore*0.8)+(audienceScore*0.2);
+        score=finalScore;
+        cout<<"Prompt Score: "<<promptScore<<endl;
+        cout<<"Final Score: "<<finalScore<<endl;
+    }
+
+    void displayParticipant(){
+        cout<<"Participant ID: "<<participantID<<endl;
+        cout<<"Participant Name: "<<participantname<<endl;
+        cout<<"Department: "<<department<<endl;
+        cout<<"Team Name: "<<teamname<<endl;
+    }
+
+
+    void displayPrompt(){
+        cout<<"Prompt ID: "<<promptID<<endl;
+        cout<<"Prompt Category: "<<promptCategory<<endl;
+        cout<<"Prompt Text: "<<promptText<<endl;
+        cout<<"Challenge Name: "<<challengeName<<endl;
+    }
+
+
+    void displayScore(){
+        cout<<"Creative Score: "<<creativeScore<<endl;
+        cout<<"Relevance Score: "<<revelanceScore<<endl;
+        cout<<"Output Score: "<<outputScore<<endl;
+        cout<<"Clarity Score: "<<clarityScore<<endl;
+        cout<<"Audience Score: "<<audienceScore<<endl;
+        scoreCalculation();
+        // cout<<"Prompt Score: "<<promptScore<<endl;
+        // cout<<"Final Score: "<<finalScore<<endl;
+    }
+
+
+
+    string promptAnalyze()
+    {
+        if(score >= 8){
+            return "Master Prompt 💯 You gave a Top-Tier prompt 🔥";
         }
+        else if(score >= 6){
+            return "Strong Prompt 👍 Well executed 🫡";
+        }
+        else if(score >= 4){
+            return "Average Prompt 🙃 Fairly standard 🤓";
+        }
+        else{
+            return "Needs Improvement 🫥 Back to the Drawing Board 📝";
+        }
+    }
 };
+
 class Security
 {
     string admin[3]={"Deepak","Vikashini","Dhanush"};
@@ -126,9 +158,7 @@ class Security
                 return password[index]==pass;
         }
 };
-void display(int maxparticipant){
 
-}
 int main(){
     string username,password;
     int maxparticipant,choice,participantCount=0,promptCount=0,scoreCount=0,maxprompt;
@@ -151,6 +181,7 @@ if(s.getaccess(username,password)){
     prompt* prompts=new prompt[maxprompt];
     score* scores=new score[maxprompt];
     getDetails* details=new getDetails[maxparticipant];
+    //displayDetails* display=new displayDetails[maxparticipant];
 
     do{
         cout<<"==============Menu================="<<endl;
@@ -196,14 +227,14 @@ if(s.getaccess(username,password)){
             cout<<"===========Details==========="<<endl;
             for(int i=0;i<maxparticipant;i++){
                 if(participantCount!=0){
-                    part[i].displayParticipant();
+                    details[i].displayParticipant();
                 }
                 if(promptCount!=0){
-                    prompts[i].displayPrompt();
+                    details[i].displayPrompt();
                 }
                 if(scoreCount!=0){
-                    scores[i].displayScore();
-                    cout<<scores[i].promptAnalyze();
+                    details[i].displayScore();
+                    cout<<details[i].promptAnalyze()<<endl;
                 }
             }
             break;
