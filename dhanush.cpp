@@ -149,88 +149,91 @@ int main()
                     cout<<"\nPrompt details added successfully!"<<endl;
                     promptCount++;
                     break;
-            }
-            else
-            {
-                cout<<"You can't able to add more details"<<endl<<endl;
-                break;
-            }
-
-        case 3:
-
-            if(scoreCount<maxparticipant)
-            {
-                cout<<"\nEnter the score for the prompt:";
-                cout<<"\nEnter the creative score:";
-                cin>>scores[scoreCount].creativeScore;
-                cout<<"\nEnter the relevance score:";
-                cin>>scores[scoreCount].revelanceScore;
-                cout<<"\nEnter the clarity score:";
-                cin>>scores[scoreCount].clarityScore;
-                cout<<"\nEnter the output score:";
-                cin>>scores[scoreCount].outputScore;
-                cout<<"\nEnter the audience score:";
-                cin>>scores[scoreCount].audienceScore;
-                cout<<"\nPrompt scores added successfully!";
-                cout<<"\nFinal score is being calculated..."<<endl;
-                scoreCount++;
-                break;
-            }
-            else
-            {
-                cout<<"You can't able to add more details."<<endl<<endl;
-                break;
-            }
-
-        case 4:
-
-            cout<<"===========Details==========="<<endl;
-
-            for(int i=0;i<maxparticipant;i++)
-            {
-                if(participateCount!=0)
-                {
-                    cout<<"Participant ID:"<<part[i].participantID<<endl;
-                    cout<<"Participant Name:"<<part[i].participantname<<endl;
-                    cout<<"Department:"<<part[i].department<<endl;
-                    cout<<"Team Name:"<<part[i].teamname<<endl;
                 }
-                if(promptCount!=0)
+                else
                 {
-                    cout<<"Prompt Id:"<<prompts[i].promptID<<endl;
-                    cout<<"Prompt Category:"<<prompts[i].promptCategory<<endl;
-                    cout<<"Prompt:"<<prompts[i].promptText<<endl;
-                    cout<<"Challenge Name:"<<prompts[i].challengeName<<endl;
+                    cout<<"You can't able to add more details"<<endl<<endl;
+                    break;
                 }
-                if(scorecount!=0)
+
+            case 3:
+
+                if(scoreCount<maxparticipant)
                 {
-                    cout<<"Creative Score:"<<scores[i].creativeScore<<endl;
-                    cout<<"Revelance Score:"<<scores[i].revelanceScore<<endl;
-                    cout<<"Quality Score:"<<scores[i].qualityScore<<endl;
-                    cout<<"Output Score:"<<scores[i].outputScore<<endl;
-                    cout<<"Prompt Score:"<<scores[i].promptScore<<endl;
-                    cout<<"Audience Score:"<<scores[i].audienceScore<<endl;
+                    cout<<"\nEnter the score for the prompt:";
+                    cout<<"\nEnter the creative score:";
+                    cin>>scores[scoreCount].creativeScore;
+                    cout<<"\nEnter the relevance score:";
+                    cin>>scores[scoreCount].revelanceScore;
+                    cout<<"\nEnter the clarity score:";
+                    cin>>scores[scoreCount].clarityScore;
+                    cout<<"\nEnter the output score:";
+                    cin>>scores[scoreCount].outputScore;
+                    cout<<"\nEnter the audience score:";
+                    cin>>scores[scoreCount].audienceScore;
+                    cout<<"\nPrompt scores added successfully!";
+                    cout<<"\nFinal score is being calculated..."<<endl;
+                    scoreCount++;
+                    break;
                 }
+                else
+                {
+                    cout<<"You can't able to add more details."<<endl<<endl;
+                    break;
+                }
+
+            case 4:
+
+                cout<<"===========Details==========="<<endl;
+
+                for(int i=0;i<maxparticipant;i++)
+                {
+                    if(participateCount!=0)
+                    {
+                        cout<<"Participant ID:"<<part[i].participantID<<endl;
+                        cout<<"Participant Name:"<<part[i].participantname<<endl;
+                        cout<<"Department:"<<part[i].department<<endl;
+                        cout<<"Team Name:"<<part[i].teamname<<endl;
+                    }
+                    if(promptCount!=0)
+                    {
+                        cout<<"Prompt Id:"<<prompts[i].promptID<<endl;
+                        cout<<"Prompt Category:"<<prompts[i].promptCategory<<endl;
+                        cout<<"Prompt:"<<prompts[i].promptText<<endl;
+                        cout<<"Challenge Name:"<<prompts[i].challengeName<<endl;
+                    }
+                    if(scorecount!=0)
+                    {
+                        cout<<"Creative Score:"<<scores[i].creativeScore<<endl;
+                        cout<<"Revelance Score:"<<scores[i].revelanceScore<<endl;
+                        cout<<"Quality Score:"<<scores[i].qualityScore<<endl;
+                        cout<<"Output Score:"<<scores[i].outputScore<<endl;
+                        cout<<"Prompt Score:"<<scores[i].promptScore<<endl;
+                        cout<<"Audience Score:"<<scores[i].audienceScore<<endl;
+                    }
+                }
+                break;
+
+            case 5:
+
+                cout<<"Exiting the program."<<endl;
+                break;
+
+            default:
+
+                cout<<"Invalid choice. Please try again."<<endl;
+
             }
-            break;
 
-        case 5:
+        }while(choice!=5);
 
-            cout<<"Exiting the program."<<endl;
-            break;
-
-        default:
-
-            cout<<"Invalid choice. Please try again."<<endl;
- 
-        }
-
-    }while(choice!=5);
-
-}
-else
-{
-    cout<<"Invalid Username or password";
-}
+    }
+    else
+    {
+        cout<<"Invalid Username or password";
+    }
+        
     return 0;
+
+    
 }
