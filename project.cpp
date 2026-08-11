@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-using namespace std;
+using namespace std; 
 
 class Participant{
     protected:
@@ -23,7 +23,7 @@ class score{
 class getDetails : public Participant, public prompt, public score
 {
 public:
-    int score;
+    float calculatedFinalScore;
     string partiId;
 
     void getParticipant(){
@@ -40,6 +40,9 @@ public:
 
         cout<<"\nEnter the team name:";
         getline(cin,teamname);
+
+        cout << "\nEnter the number of rounds participated:";
+        cin>>roundsParticipated;
 
         cout<<"Participant details has been successfully Updated"<<endl;
     }
@@ -67,36 +70,67 @@ public:
     }
 
 
-    void getScore(){
-        cout<<"\nEnter the score for the prompt";
+    void getScore()
+    {
+        cout << "\nEnter the score for the prompt\n";
+        do
+        {
+            cout << "\nEnter the creative score (0-10): ";
+            cin >> creativeScore;
+            if(creativeScore < 0 || creativeScore > 10){
+                cout << "Invalid score! Enter between 0 and 10.\n";
+            }
+        }while(creativeScore < 0 || creativeScore > 10);
 
-        cout<<"\nEnter the creative score:";
-        cin>>creativeScore;
+        do
+        {
+            cout << "\nEnter the relevance score (0-10): ";
+            cin >> relevanceScore;
+            if(relevanceScore < 0 || relevanceScore > 10)
+            {
+                cout << "Invalid score! Enter between 0 and 10.\n";
+            }
+        }while(relevanceScore < 0 || relevanceScore > 10);
 
-        cout<<"\nEnter the relevance score:";
-        cin>>revelanceScore;
+        do
+        {
+            cout << "\nEnter the clarity score (0-10): ";
+            cin >> clarityScore;
+            if(clarityScore < 0 || clarityScore > 10)
+            {    
+                cout << "Invalid score! Enter between 0 and 10.\n";
+            }
+        }while(clarityScore < 0 || clarityScore > 10);
 
-        cout<<"\nEnter the clarity score:";
-        cin>>clarityScore;
+        do
+        {
+            cout << "\nEnter the output score (0-10): ";
+            cin >> outputScore;
+            if(outputScore < 0 || outputScore > 10)
+            {
+                cout << "Invalid score! Enter between 0 and 10.\n";
+            }
+        }while(outputScore < 0 || outputScore > 10);
 
-        cout<<"\nEnter the output score:";
-        cin>>outputScore;
-
-        cout<<"\nEnter the audience score:";
-        cin>>audienceScore;
-
-        cout<<"\nPrompt scores added successfully!";
-        cout<<"\nFinal score is being calculated..."<<endl;
+        do
+        {
+            cout << "\nEnter the audience score (0-10): ";
+            cin >> audienceScore;
+            if(audienceScore < 0 || audienceScore > 10)
+            {
+                cout << "Invalid score! Enter between 0 and 10.\n";
+            }
+        }while(audienceScore < 0 || audienceScore > 10);
+        cout << "\nPrompt scores added successfully!\n";
     }
     void scoreCalculation()
     {
-        float promptScore=(creativeScore+revelanceScore+clarityScore+outputScore)/4.0;
-        float finalScore=(promptScore*0.8)+(audienceScore*0.2);
-        score=finalScore;
-        cout<<"Prompt Score: "<<promptScore<<endl;
-        cout<<"Final Score: "<<finalScore<<endl;
+        promptScore = (creativeScore + relevanceScore + clarityScore + outputScore) / 4.0;
+        finalScore = (promptScore * 0.8) + (audienceScore * 0.2);
+        calculatedFinalScore = finalScore;
+        cout << "Prompt Score: " << promptScore << endl;
+        cout << "Final Score: " << finalScore << endl;
     }
-
     void displayParticipant(){
         cout<<"Participant ID: "<<participantID<<endl;
         cout<<"Participant Name: "<<participantname<<endl;
@@ -128,13 +162,13 @@ public:
 
     string promptAnalyze()
     {
-        if(score >= 8){
+        if(calculatedFinalScore  >= 8){
             return "Master Prompt 💯 You gave a Top-Tier prompt 🔥";
         }
-        else if(score >= 6){
+        else if(calculatedFinalScore  >= 6){
             return "Strong Prompt 👍 Well executed 🫡";
         }
-        else if(score >= 4){
+        else if(calculatedFinalScore  >= 4){
             return "Average Prompt 🙃 Fairly standard 🤓";
         }
         else{
@@ -148,16 +182,14 @@ class Security
     string admin[3]={"Deepak","Vikashini","Dhanush"};
     string password[3]={"Deepak@123","Vikashini@123","Dhanush@123"};
     public:
-    int index=0;
         bool getaccess(string name,string pass){
-            for(int i=0;i<=2;i++){
-                if(name==admin[i]){
-                    index=i;
-                    break;
+            for(int i=0;i<3;i++){
+                if(name==admin[i] && pass==password[i]){
+                    return true;
                 }
-            }
-                return password[index]==pass;
         }
+        return false;
+}
 };
 
 int main(){
@@ -199,16 +231,15 @@ if(s.getaccess(username,password)){
         switch(choice){
 
         case 1:
-        if(participantCount<maxparticipant){
-            details[participantCount].getParticipant();
-            id[participantCount]=details[participantCount].partiId;
-            participantCount++;
+            if(participantCount < maxparticipant)
+            {
+                details[participantCount].getParticipant(id, participantCount);
+                id[participantCount] = details[participantCount].partiId;
+                participantCount++;
+            }else{
+                cout << "You can't add more participants.\n";
+            }
             break;
-        }
-        else{
-            cout<<"You can't able to add more participant."<<endl<<endl;
-            break;
-        }
         case 2:
             if(promptCount<maxprompt){
                 details[promptCount].getPrompt();
